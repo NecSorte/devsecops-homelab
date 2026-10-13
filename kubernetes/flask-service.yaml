@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: axon-flask
+  namespace: database
+  labels:
+    app: vulnerable-app
+spec:
+  type: ClusterIP
+  selector:
+    app: vulnerable-app
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

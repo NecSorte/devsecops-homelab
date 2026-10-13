@@ -6,10 +6,12 @@
 global:
   postgresql:
     auth:
-      postgresPassword: "postgres"
-      username: "appuser"
-      password: "apppass"
-      database: "vulnerable_app"
+      username: "axonuser"
+      database: "axon_vulnerable_app"
+      existingSecret: "postgresql-auth" # add
+      secretKeys: # added k8s secrets in the devsecops-homelab/secrets directory
+        adminPasswordKey: "postgres-password"
+        userPasswordKey: "password"
 
 # Primary configuration
 primary:
@@ -37,23 +39,38 @@ primary:
     initialDelaySeconds: 5
     periodSeconds: 5
   
-  # Security context
-  securityContext:
+  # Old Security context
+  # securityContext:
+  #   enabled: true
+  #   runAsUser: 1001
+  #   runAsGroup: 1001
+  #   fsGroup: 1001
+
+  # Pod level security context added
+  podSecurityContext:
+    enabled: true
+    fsGroup: 1001
+
+  containerSecurityContext:
     enabled: true
     runAsUser: 1001
     runAsGroup: 1001
-    fsGroup: 1001
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
 
-# Service configuration
-service:
-  type: ClusterIP
-  ports:
-    postgresql: 5432
+  # Service configuration
+  service:
+    type: ClusterIP
+    ports:
+      postgresql: 5432
 
 # Network policies (optional)
-networkPolicy:
-  enabled: false
+  networkPolicy:
+    enabled: true
 
 # Monitoring (optional)
 metrics:
-  enabled: false
+  enabled: true

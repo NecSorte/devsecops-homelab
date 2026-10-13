@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+.kube/
+kubeconfig*
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+crash*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Local clutter
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

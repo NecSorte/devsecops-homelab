@@ -7,6 +7,7 @@ resource "aws_security_group" "eks_cluster_sg" {
   name_prefix = "eks-cluster-"
   vpc_id      = module.vpc.vpc_id
 
+# Why any egress? 
   egress {
     from_port   = 0
     to_port     = 0
@@ -24,6 +25,7 @@ resource "aws_security_group" "eks_nodes_sg" {
   name_prefix = "eks-nodes-"
   vpc_id     = module.vpc.vpc_id
 
+# Why any ingress?
   ingress {
     from_port = 0
     to_port   = 65535
